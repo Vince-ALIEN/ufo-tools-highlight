@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ufo-highlight/card-switcher",
+  "title": "UFO Sélecteur de cartes",
+  "category": "ufo-highlight",
+  "icon": "index-card",
+  "description": "Un sélecteur de cartes interactif (accordéon horizontal) basé sur <details>/<summary>, sans JavaScript, accessible au clavier et aux lecteurs d'écran.",
+  "keywords": ["cartes", "accordéon", "sélecteur", "cards", "highlight"],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": false
+    }
+  },
+  "textdomain": "ufo-highlight",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "providesContext": {
+    "ufo-highlight/switcherId": "uid"
+  },
+  "attributes": {
+    "uid": {
+      "type": "string",
+      "default": ""
+    },
+    "groupLabel": {
+      "type": "string",
+      "default": "Sélecteur de cartes"
+    }
+  }
+}

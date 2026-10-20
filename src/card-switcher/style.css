@@ -1,0 +1,50 @@
+/* =========================================================================
+   ufo-card-switcher : residu CSS non exprimable en utilitaires Tailwind.
+   Le reste du design (couleurs, espacements, typographie, degrades) est
+   porte par des classes Tailwind directement dans edit.js et save.js,
+   comme dans ufo-blocks. Ce plugin ninstalle pas de build Tailwind.
+   Si le theme du site charge deja Tailwind, ajouter le dossier build de
+   ce plugin au content scanne par sa configuration pour que ces classes
+   utilitaires soient bien generees.
+   ========================================================================= */
+
+/* <summary> supprime son propre marqueur natif ; `list-style: none` (via la
+   classe utilitaire Tailwind `list-none`) suffit sur Firefox/Chrome, mais
+   Safari utilise un pseudo-élément dédié qu'aucune classe Tailwind ne cible. */
+.wp-block-ufo-highlight-card-switcher-item summary::-webkit-details-marker,
+.wp-block-ufo-highlight-card-switcher-item summary::marker {
+	display: none;
+}
+
+/* Redimensionnement de la carte ouverte : gardé en CSS simple plutôt qu'en
+   classe Tailwind arbitraire (`open:flex-[3_1_0%]`) pour que ce comportement
+   fonctionne à coup sûr, même si le Tailwind externe au plugin ne scanne pas
+   ce dossier et ne génère donc pas cette classe arbitraire. */
+.wp-block-ufo-highlight-card-switcher-item[open] {
+	flex: 3 1 0%;
+	min-width: 260px;
+}
+
+@keyframes ufo-card-switcher-reveal {
+
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.wp-block-ufo-highlight-card-switcher-item[open] .ufo-card-switcher__panel {
+	animation: ufo-card-switcher-reveal 0.3s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.wp-block-ufo-highlight-card-switcher-item[open] .ufo-card-switcher__panel {
+		animation: none;
+	}
+}

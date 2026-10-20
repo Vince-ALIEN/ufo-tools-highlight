@@ -1,0 +1,26 @@
+/* =========================================================================
+   ufo-card-switcher — Styles d'édition Gutenberg
+   ========================================================================= */
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher {
+	padding: 8px;
+	border: 1px dashed rgba(0, 0, 0, 0.18);
+	border-radius: 8px;
+}
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher.is-selected {
+	border-style: solid;
+	border-color: #7c3aed;
+}
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher .ufo-card-switcher__list {
+	align-items: stretch;
+}
+
+/* Le bouton "+" d'ajout d'InnerBlocks ne doit pas s'étirer comme une carte */
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher
+.block-list-appender {
+	flex: 0 0 auto;
+	align-self: flex-end;
+}

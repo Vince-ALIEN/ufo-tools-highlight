@@ -1,0 +1,28 @@
+/* =========================================================================
+   ufo-card-switcher-item — Styles d'édition Gutenberg
+   ========================================================================= */
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher-item {
+	outline: 1px dashed rgba(0, 0, 0, 0.18);
+	outline-offset: 2px;
+}
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher-item.is-selected {
+	outline: 2px solid #7c3aed;
+}
+
+/* RichText vides : garder un espace cliquable pour le badge/CTA facultatifs */
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher-item
+.ufo-card-switcher__badge:empty::before,
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher-item
+.ufo-card-switcher__cta-text:empty::before {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher-item
+.ufo-card-switcher__panel {
+	min-height: 2rem;
+}

@@ -1,0 +1,10 @@
+.gitignore
+.distignore
+.editorconfig
+.git/
+.gitattributes
+node_modules/
+package.json
+package-lock.json
+src/
+*.md

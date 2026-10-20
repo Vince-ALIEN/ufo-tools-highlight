@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ufo-highlight/card-switcher-item",
+  "title": "UFO Carte du sélecteur",
+  "category": "ufo-highlight",
+  "icon": "align-center",
+  "description": "Une carte du sélecteur : image et titre toujours visibles, badge/texte/lien révélés à l'ouverture.",
+  "parent": ["ufo-highlight/card-switcher"],
+  "usesContext": ["ufo-highlight/switcherId"],
+  "supports": {
+    "html": false
+  },
+  "textdomain": "ufo-highlight",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php",
+  "attributes": {
+    "uid": {
+      "type": "string",
+      "default": ""
+    },
+    "groupId": {
+      "type": "string",
+      "default": ""
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": false
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "imageAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "badge": {
+      "type": "string",
+      "source": "html",
+      "selector": ".ufo-card-switcher__badge",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "source": "html",
+      "selector": ".ufo-card-switcher__title",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "source": "html",
+      "selector": ".ufo-card-switcher__description",
+      "default": ""
+    },
+    "ctaText": {
+      "type": "string",
+      "source": "html",
+      "selector": ".ufo-card-switcher__cta-text",
+      "default": "En savoir plus"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "linkNewTab": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
