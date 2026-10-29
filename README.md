@@ -9,7 +9,7 @@ Bloc Gutenberg **« Sélecteur de cartes »** : un accordéon horizontal de cart
 | Bloc | Nom du bloc | Description |
 |---|---|---|
 | UFO Sélecteur de cartes | `ufo-highlight/card-switcher` | Conteneur des cartes |
-| UFO Carte du sélecteur | `ufo-highlight/card-switcher-item` | Carte : image, titre, étiquette, description, bouton |
+| UFO Carte du sélecteur | `ufo-highlight/card-switcher-item` | Carte : image, titre, étiquette, description, bouton. Dans un sélecteur ou seule (cellule ufo Row…) |
 
 Les noms de blocs (`ufo-highlight/*`) et les classes CSS sont ceux d'UFO Highlight 1.0.0 : les contenus existants restent valides. Les blocs apparaissent dans la catégorie **UFO Blocks**, partagée avec les autres Ufo Tools.
 

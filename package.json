@@ -33,6 +33,6 @@
     "@wordpress/element": "^6.44.0",
     "@wordpress/i18n": "^6.17.0",
     "@wordpress/icons": "^15.4.0",
-    "lucide-react": "^0.563.0"
+    "lucide-react": "^1.64.0"
   }
 }

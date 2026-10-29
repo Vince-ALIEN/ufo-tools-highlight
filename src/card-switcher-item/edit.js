@@ -51,18 +51,30 @@ export default function Edit( {
 
 	const switcherId = context[ 'ufo-highlight/switcherId' ];
 
-	// Dans l'éditeur, la carte ouverte est celle qu'on édite : la carte
-	// sélectionnée si la sélection est dans ce sélecteur, sinon la carte
-	// « Ouverte par défaut » (état affiché sur le site).
+	// Dans l'éditeur, la carte ouverte est celle qu'on édite : dans un
+	// sélecteur, la carte sélectionnée si la sélection est dans ce sélecteur,
+	// sinon la carte « Ouverte par défaut » (état affiché sur le site) ; seule
+	// (cellule ufo Row…), la carte s'ouvre quand elle est sélectionnée.
 	const { isOpen, position, siblingsCount } = useSelect(
 		( select ) => {
 			const {
 				getBlockRootClientId,
+				getBlockName,
 				getBlockOrder,
 				getSelectedBlockClientId,
 			} = select( blockEditorStore );
-			const siblings = getBlockOrder( getBlockRootClientId( clientId ) );
+			const rootId = getBlockRootClientId( clientId );
 			const selectedId = getSelectedBlockClientId();
+
+			if ( getBlockName( rootId ) !== 'ufo-highlight/card-switcher' ) {
+				return {
+					isOpen: selectedId === clientId || defaultOpen,
+					position: 0,
+					siblingsCount: 0,
+				};
+			}
+
+			const siblings = getBlockOrder( rootId );
 
 			return {
 				isOpen: siblings.includes( selectedId )
@@ -82,8 +94,9 @@ export default function Edit( {
 	}, [ uid, clientId, setAttributes ] );
 
 	useEffect( () => {
-		if ( switcherId && switcherId !== groupId ) {
-			setAttributes( { groupId: switcherId } );
+		// Carte sortie d'un sélecteur : elle quitte son accordéon.
+		if ( ( switcherId || '' ) !== groupId ) {
+			setAttributes( { groupId: switcherId || '' } );
 		}
 	}, [ switcherId, groupId, setAttributes ] );
 
@@ -112,12 +125,14 @@ export default function Edit( {
 		className:
 			'group relative flex flex-1 flex-col justify-end overflow-hidden rounded-2xl bg-slate-900 transition-all duration-500 ease-in-out motion-reduce:transition-none min-w-[220px] min-h-[480px] sm:h-[480px] sm:min-h-0',
 		open: isOpen || undefined,
-		'aria-label': sprintf(
-			/* translators: 1: card position, 2: number of cards. */
-			__( 'Carte %1$d sur %2$d', 'ufo-tools-highlight' ),
-			position,
-			siblingsCount
-		),
+		'aria-label': position
+			? sprintf(
+					/* translators: 1: card position, 2: number of cards. */
+					__( 'Carte %1$d sur %2$d', 'ufo-tools-highlight' ),
+					position,
+					siblingsCount
+			  )
+			: __( 'Carte', 'ufo-tools-highlight' ),
 	} );
 
 	return (
@@ -304,11 +319,13 @@ export default function Edit( {
 					className="ufo-card-switcher__editor-label"
 					aria-hidden="true"
 				>
-					{ sprintf(
-						/* translators: %d: card position. */
-						__( 'Carte %d', 'ufo-tools-highlight' ),
-						position
-					) }
+					{ position
+						? sprintf(
+								/* translators: %d: card position. */
+								__( 'Carte %d', 'ufo-tools-highlight' ),
+								position
+						  )
+						: __( 'Carte', 'ufo-tools-highlight' ) }
 					{ defaultOpen &&
 						` · ${ __(
 							'ouverte par défaut',

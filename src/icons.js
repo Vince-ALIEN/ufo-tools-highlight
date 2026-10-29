@@ -1,11 +1,12 @@
 // icons.js
 // Même rendu que les icônes de bloc d'ufo-tools-blocks (src/icons.js).
 // Import uniquement les icônes utilisées pour réduire la taille du bundle
-import { Layers } from 'lucide-react';
+import { Layers, LayersArrowUp } from 'lucide-react';
 
 // Map des icônes disponibles
 const iconMap = {
 	Layers,
+	LayersArrowUp,
 };
 
 export const getBlockIcon = ( iconName, options = {} ) => {

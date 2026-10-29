@@ -4,9 +4,8 @@
   "name": "ufo-highlight/card-switcher-item",
   "title": "UFO Carte du sélecteur",
   "category": "ufo-blocks",
-  "icon": "align-center",
-  "description": "Une carte du sélecteur : image et titre toujours visibles, étiquette, description et bouton révélés à l’ouverture (toujours visibles sur mobile).",
-  "parent": ["ufo-highlight/card-switcher"],
+  "icon": "LayersArrowUp",
+  "description": "Une carte image + titre, dans un sélecteur de cartes ou seule (cellule ufo Row…) : étiquette, description et bouton révélés à l’ouverture (toujours visibles sur mobile).",
   "usesContext": ["ufo-highlight/switcherId"],
   "supports": {
     "html": false
@@ -14,6 +13,7 @@
   "textdomain": "ufo-tools-highlight",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
+  "style": "ufo-highlight-card-switcher-style",
   "render": "file:./render.php",
   "attributes": {
     "uid": {

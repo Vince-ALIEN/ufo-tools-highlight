@@ -15,7 +15,10 @@ export default function save( { attributes } ) {
 		linkNewTab,
 	} = attributes;
 
-	const groupName = `ufo-card-switcher-${ groupId || 'standalone' }`;
+	// Dans un sélecteur, `name` relie les cartes en accordéon exclusif. Une
+	// carte seule (cellule ufo Row…) n'en a pas : elle s'ouvre et se ferme
+	// indépendamment des autres cartes seules de la page.
+	const groupName = groupId ? `ufo-card-switcher-${ groupId }` : undefined;
 
 	const blockProps = useBlockProps.save( {
 		className:

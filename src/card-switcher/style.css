@@ -97,10 +97,10 @@
 
 @media (max-width: 639.98px) {
 
-	/* Préfixe du conteneur : passe devant les utilitaires Tailwind du thème
-	   (`flex-1`, `min-h-[480px]`) chargés après ce fichier. */
-	.wp-block-ufo-highlight-card-switcher .wp-block-ufo-highlight-card-switcher-item,
-	.wp-block-ufo-highlight-card-switcher .wp-block-ufo-highlight-card-switcher-item[open] {
+	/* Classe doublée : passe devant les utilitaires Tailwind du thème
+	   (`flex-1`, `min-h-[480px]`) chargés après ce fichier, y compris pour une
+	   carte seule, hors sélecteur. */
+	.wp-block-ufo-highlight-card-switcher-item.wp-block-ufo-highlight-card-switcher-item {
 		flex: 0 0 auto;
 		min-width: 0;
 		min-height: 22.5rem;

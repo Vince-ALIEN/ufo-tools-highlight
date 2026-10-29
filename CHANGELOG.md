@@ -7,7 +7,12 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added
+- **« UFO Carte du sélecteur » insérable seule**, partout dans l'éditeur (cellule ufo Row, racine de la page…), plus seulement dans un « UFO Sélecteur de cartes ». Une carte seule s'ouvre et se ferme indépendamment des autres (pas d'attribut `name`), s'ouvre dans l'éditeur quand elle est sélectionnée et charge la feuille de style du sélecteur. Une carte sortie d'un sélecteur quitte son accordéon.
+
 ### Changed
+- Icône du bloc « UFO Carte du sélecteur » : `LayersArrowUp` de Lucide, même traitement que le sélecteur.
+- `lucide-react` 1.64 (`LayersArrowUp` n'existe pas en 0.x).
 - Icône du bloc « UFO Sélecteur de cartes » : `Layers` de Lucide, sur fond `#F6F6F7` en `#EB9188`, comme les blocs d'ufo-tools-blocks.
 
 ## [1.0.0] - 2026-10-29
