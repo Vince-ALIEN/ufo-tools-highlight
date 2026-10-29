@@ -52,7 +52,7 @@ export default function save( { attributes } ) {
 				) }
 				<RichText.Content
 					tagName="h3"
-					className="ufo-card-switcher__title relative mb-2 text-xl font-semibold leading-tight text-background sm:text-2xl"
+					className="ufo-card-switcher__title not-prose relative mb-6 text-xl font-semibold leading-tight text-background sm:text-2xl"
 					value={ title }
 				/>
 			</summary>
