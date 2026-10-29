@@ -4,7 +4,7 @@
   "name": "ufo-highlight/card-switcher",
   "title": "UFO Sélecteur de cartes",
   "category": "ufo-blocks",
-  "icon": "index-card",
+  "icon": "Layers",
   "description": "Un sélecteur de cartes interactif (accordéon horizontal) basé sur <details>/<summary>, sans JavaScript, accessible au clavier et aux lecteurs d'écran.",
   "keywords": ["cartes", "accordéon", "sélecteur", "cards", "highlight"],
   "supports": {

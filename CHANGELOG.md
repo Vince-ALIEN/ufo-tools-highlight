@@ -5,6 +5,11 @@ Tous les changements notables de ce projet seront documentés dans ce fichier.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Icône du bloc « UFO Sélecteur de cartes » : `Layers` de Lucide, sur fond `#F6F6F7` en `#EB9188`, comme les blocs d'ufo-tools-blocks.
+
 ## [1.0.0] - 2026-10-29
 
 Première version d'**Ufo Tools Highlight**, successeur d'UFO Highlight 1.0.0 (nouveau dépôt).
