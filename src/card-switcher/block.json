@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "ufo-highlight/card-switcher",
   "title": "UFO Sélecteur de cartes",
-  "category": "ufo-highlight",
+  "category": "ufo-blocks",
   "icon": "index-card",
   "description": "Un sélecteur de cartes interactif (accordéon horizontal) basé sur <details>/<summary>, sans JavaScript, accessible au clavier et aux lecteurs d'écran.",
   "keywords": ["cartes", "accordéon", "sélecteur", "cards", "highlight"],
@@ -17,7 +17,7 @@
       "blockGap": false
     }
   },
-  "textdomain": "ufo-highlight",
+  "textdomain": "ufo-tools-highlight",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

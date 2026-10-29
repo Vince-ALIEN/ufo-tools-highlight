@@ -5,20 +5,54 @@
 .editor-styles-wrapper .wp-block-ufo-highlight-card-switcher-item {
 	outline: 1px dashed rgba(0, 0, 0, 0.18);
 	outline-offset: 2px;
+	cursor: pointer;
+}
+
+.editor-styles-wrapper .wp-block-ufo-highlight-card-switcher-item[open] {
+	cursor: auto;
 }
 
 .editor-styles-wrapper .wp-block-ufo-highlight-card-switcher-item.is-selected {
 	outline: 2px solid #7c3aed;
 }
 
-/* RichText vides : garder un espace cliquable pour le badge/CTA facultatifs */
+/* Repère « Carte N » : identifie la carte ciblée, cliquable pour la
+   sélectionner. Éditeur uniquement. */
+.editor-styles-wrapper .ufo-card-switcher__editor-label {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 2;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.9);
+	color: #1e1e1e;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.6;
+	letter-spacing: 0.02em;
+}
+
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher-item.is-selected
+.ufo-card-switcher__editor-label {
+	background: #7c3aed;
+	color: #fff;
+}
+
+/* RichText vides : placeholder lisible sur le fond sombre */
 .editor-styles-wrapper
 .wp-block-ufo-highlight-card-switcher-item
-.ufo-card-switcher__badge:empty::before,
-.editor-styles-wrapper
-.wp-block-ufo-highlight-card-switcher-item
-.ufo-card-switcher__cta-text:empty::before {
+[data-rich-text-placeholder]::after {
 	color: rgba(255, 255, 255, 0.6);
+	opacity: 1;
+}
+
+.editor-styles-wrapper
+.wp-block-ufo-highlight-card-switcher-item
+.ufo-card-switcher__cta
+[data-rich-text-placeholder]::after {
+	color: rgba(15, 23, 42, 0.5);
 }
 
 .editor-styles-wrapper

@@ -1,8 +1,10 @@
 .gitignore
 .distignore
 .editorconfig
+.eslintrc.json
 .git/
 .gitattributes
+.github/
 node_modules/
 package.json
 package-lock.json

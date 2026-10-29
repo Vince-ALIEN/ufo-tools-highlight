@@ -1,18 +1,27 @@
-import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
 import {
 	useBlockProps,
 	RichText,
 	InspectorControls,
+	BlockControls,
 	MediaUpload,
 	MediaUploadCheck,
+	MediaReplaceFlow,
+	LinkControl,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
 	TextControl,
 	Button,
+	Popover,
+	ToolbarGroup,
+	ToolbarButton,
 } from '@wordpress/components';
+import { link, linkOff, starEmpty, starFilled } from '@wordpress/icons';
 import ArrowIcon from './arrow-icon';
 
 export default function Edit( {
@@ -20,6 +29,7 @@ export default function Edit( {
 	setAttributes,
 	clientId,
 	context,
+	isSelected,
 } ) {
 	const {
 		uid,
@@ -27,6 +37,7 @@ export default function Edit( {
 		defaultOpen,
 		imageUrl,
 		imageAlt,
+		imageId,
 		badge,
 		title,
 		description,
@@ -35,7 +46,34 @@ export default function Edit( {
 		linkNewTab,
 	} = attributes;
 
+	const [ isLinkPopoverOpen, setIsLinkPopoverOpen ] = useState( false );
+	const [ ctaAnchor, setCtaAnchor ] = useState( null );
+
 	const switcherId = context[ 'ufo-highlight/switcherId' ];
+
+	// Dans l'éditeur, la carte ouverte est celle qu'on édite : la carte
+	// sélectionnée si la sélection est dans ce sélecteur, sinon la carte
+	// « Ouverte par défaut » (état affiché sur le site).
+	const { isOpen, position, siblingsCount } = useSelect(
+		( select ) => {
+			const {
+				getBlockRootClientId,
+				getBlockOrder,
+				getSelectedBlockClientId,
+			} = select( blockEditorStore );
+			const siblings = getBlockOrder( getBlockRootClientId( clientId ) );
+			const selectedId = getSelectedBlockClientId();
+
+			return {
+				isOpen: siblings.includes( selectedId )
+					? selectedId === clientId
+					: defaultOpen,
+				position: siblings.indexOf( clientId ) + 1,
+				siblingsCount: siblings.length,
+			};
+		},
+		[ clientId, defaultOpen ]
+	);
 
 	useEffect( () => {
 		if ( ! uid ) {
@@ -49,42 +87,145 @@ export default function Edit( {
 		}
 	}, [ switcherId, groupId, setAttributes ] );
 
-	const groupName = `ufo-card-switcher-${
-		switcherId || groupId || 'standalone'
-	}`;
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setIsLinkPopoverOpen( false );
+		}
+	}, [ isSelected ] );
 
+	const onSelectImage = ( media ) =>
+		setAttributes( {
+			imageUrl: media.url,
+			imageId: media.id,
+			imageAlt: imageAlt || media.alt || '',
+		} );
+
+	const onResetImage = () =>
+		setAttributes( { imageUrl: '', imageId: 0, imageAlt: '' } );
+
+	// <details>/<summary> sont remplacés par des <div> dans l'éditeur : un
+	// <summary> intercepte la barre d'espace et le clic (le titre devenait
+	// difficile à éditer) et l'ouverture native se battait avec la sélection.
+	// L'attribut `open` est conservé pour que les styles [open] / group-open
+	// du site s'appliquent à l'identique.
 	const blockProps = useBlockProps( {
 		className:
 			'group relative flex flex-1 flex-col justify-end overflow-hidden rounded-2xl bg-slate-900 transition-all duration-500 ease-in-out motion-reduce:transition-none min-w-[220px] min-h-[480px] sm:h-[480px] sm:min-h-0',
-		name: groupName,
-		open: defaultOpen || undefined,
+		open: isOpen || undefined,
+		'aria-label': sprintf(
+			/* translators: 1: card position, 2: number of cards. */
+			__( 'Carte %1$d sur %2$d', 'ufo-tools-highlight' ),
+			position,
+			siblingsCount
+		),
 	} );
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={ __( 'Image', 'ufo-highlight' ) }>
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={ ( media ) =>
+			<BlockControls group="block">
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={ defaultOpen ? starFilled : starEmpty }
+						label={
+							defaultOpen
+								? __(
+										'Ne plus ouvrir par défaut',
+										'ufo-tools-highlight'
+								  )
+								: __(
+										'Ouvrir par défaut',
+										'ufo-tools-highlight'
+								  )
+						}
+						isPressed={ defaultOpen }
+						onClick={ () =>
+							setAttributes( { defaultOpen: ! defaultOpen } )
+						}
+					/>
+					<ToolbarButton
+						ref={ setCtaAnchor }
+						icon={ linkUrl ? linkOff : link }
+						label={
+							linkUrl
+								? __(
+										'Modifier le lien du bouton',
+										'ufo-tools-highlight'
+								  )
+								: __(
+										'Ajouter un lien au bouton',
+										'ufo-tools-highlight'
+								  )
+						}
+						isActive={ !! linkUrl || isLinkPopoverOpen }
+						onClick={ () => setIsLinkPopoverOpen( ( v ) => ! v ) }
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+
+			<BlockControls group="other">
+				<MediaReplaceFlow
+					mediaId={ imageId }
+					mediaURL={ imageUrl }
+					allowedTypes={ [ 'image' ] }
+					accept="image/*"
+					onSelect={ onSelectImage }
+					onReset={ imageUrl ? onResetImage : undefined }
+					name={
+						imageUrl
+							? __( "Remplacer l'image", 'ufo-tools-highlight' )
+							: __( 'Ajouter une image', 'ufo-tools-highlight' )
+					}
+				/>
+			</BlockControls>
+
+			{ isLinkPopoverOpen && (
+				<Popover
+					anchor={ ctaAnchor }
+					placement="bottom"
+					onClose={ () => setIsLinkPopoverOpen( false ) }
+					focusOnMount
+				>
+					<div style={ { padding: '8px', minWidth: 320 } }>
+						<LinkControl
+							value={ {
+								url: linkUrl,
+								opensInNewTab: linkNewTab,
+							} }
+							onChange={ ( { url, opensInNewTab } ) =>
 								setAttributes( {
-									imageUrl: media.url,
-									imageId: media.id,
-									imageAlt: imageAlt || media.alt || '',
+									linkUrl: url || '',
+									linkNewTab: !! opensInNewTab,
 								} )
 							}
+							onRemove={ () => {
+								setAttributes( {
+									linkUrl: '',
+									linkNewTab: false,
+								} );
+								setIsLinkPopoverOpen( false );
+							} }
+						/>
+					</div>
+				</Popover>
+			) }
+
+			<InspectorControls>
+				<PanelBody title={ __( 'Image', 'ufo-tools-highlight' ) }>
+					<MediaUploadCheck>
+						<MediaUpload
+							onSelect={ onSelectImage }
 							allowedTypes={ [ 'image' ] }
-							value={ attributes.imageId }
+							value={ imageId }
 							render={ ( { open } ) => (
 								<Button onClick={ open } variant="secondary">
 									{ imageUrl
 										? __(
 												"Changer l'image",
-												'ufo-highlight'
+												'ufo-tools-highlight'
 										  )
 										: __(
 												'Choisir une image',
-												'ufo-highlight'
+												'ufo-tools-highlight'
 										  ) }
 								</Button>
 							) }
@@ -93,7 +234,7 @@ export default function Edit( {
 					<TextControl
 						label={ __(
 							"Texte alternatif de l'image",
-							'ufo-highlight'
+							'ufo-tools-highlight'
 						) }
 						value={ imageAlt }
 						onChange={ ( value ) =>
@@ -101,25 +242,28 @@ export default function Edit( {
 						}
 						help={ __(
 							"Laissez vide si l'image est purement décorative (le titre et la description suffisent).",
-							'ufo-highlight'
+							'ufo-tools-highlight'
 						) }
 						disabled={ ! imageUrl }
 					/>
 				</PanelBody>
 
 				<PanelBody
-					title={ __( 'Comportement', 'ufo-highlight' ) }
+					title={ __( 'Comportement', 'ufo-tools-highlight' ) }
 					initialOpen={ false }
 				>
 					<ToggleControl
-						label={ __( 'Ouverte par défaut', 'ufo-highlight' ) }
+						label={ __(
+							'Ouverte par défaut',
+							'ufo-tools-highlight'
+						) }
 						checked={ defaultOpen }
 						onChange={ ( value ) =>
 							setAttributes( { defaultOpen: value } )
 						}
 						help={ __(
-							"Une seule carte du groupe doit être ouverte par défaut. Le clic natif étant désactivé dans l'éditeur (pour permettre l'édition du texte), utilisez ce réglage pour prévisualiser l'état ouvert.",
-							'ufo-highlight'
+							"Carte ouverte au chargement de la page (une seule par sélecteur). Dans l'éditeur, la carte sélectionnée s'ouvre toujours pour être modifiée.",
+							'ufo-tools-highlight'
 						) }
 					/>
 				</PanelBody>
@@ -127,12 +271,12 @@ export default function Edit( {
 				<PanelBody
 					title={ __(
 						'Lien du bouton (optionnel)',
-						'ufo-highlight'
+						'ufo-tools-highlight'
 					) }
 					initialOpen={ false }
 				>
 					<TextControl
-						label={ __( 'URL', 'ufo-highlight' ) }
+						label={ __( 'URL', 'ufo-tools-highlight' ) }
 						value={ linkUrl }
 						onChange={ ( value ) =>
 							setAttributes( { linkUrl: value } )
@@ -144,7 +288,7 @@ export default function Edit( {
 						<ToggleControl
 							label={ __(
 								'Ouvrir dans un nouvel onglet',
-								'ufo-highlight'
+								'ufo-tools-highlight'
 							) }
 							checked={ linkNewTab }
 							onChange={ ( value ) =>
@@ -155,11 +299,23 @@ export default function Edit( {
 				</PanelBody>
 			</InspectorControls>
 
-			<details { ...blockProps }>
-				<summary
-					className="block cursor-pointer list-none rounded-2xl p-6 pb-0 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-background"
-					onClick={ ( event ) => event.preventDefault() }
+			<div { ...blockProps }>
+				<span
+					className="ufo-card-switcher__editor-label"
+					aria-hidden="true"
 				>
+					{ sprintf(
+						/* translators: %d: card position. */
+						__( 'Carte %d', 'ufo-tools-highlight' ),
+						position
+					) }
+					{ defaultOpen &&
+						` · ${ __(
+							'ouverte par défaut',
+							'ufo-tools-highlight'
+						) }` }
+				</span>
+				<div className="block rounded-2xl p-6 pb-0">
 					{ imageUrl ? (
 						<img
 							src={ imageUrl }
@@ -168,7 +324,7 @@ export default function Edit( {
 						/>
 					) : (
 						<span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-900 text-sm text-background/60">
-							{ __( 'Aucune image', 'ufo-highlight' ) }
+							{ __( 'Aucune image', 'ufo-tools-highlight' ) }
 						</span>
 					) }
 					<span
@@ -184,11 +340,11 @@ export default function Edit( {
 						}
 						placeholder={ __(
 							'Titre de la carte…',
-							'ufo-highlight'
+							'ufo-tools-highlight'
 						) }
 						allowedFormats={ [] }
 					/>
-				</summary>
+				</div>
 				<div className="ufo-card-switcher__panel relative hidden flex-col items-start gap-3 px-6 pb-6 pt-3 group-open:flex">
 					<RichText
 						tagName="span"
@@ -198,8 +354,8 @@ export default function Edit( {
 							setAttributes( { badge: value } )
 						}
 						placeholder={ __(
-							'Badge (optionnel)…',
-							'ufo-highlight'
+							'Étiquette (optionnelle)…',
+							'ufo-tools-highlight'
 						) }
 						allowedFormats={ [] }
 					/>
@@ -212,7 +368,7 @@ export default function Edit( {
 						}
 						placeholder={ __(
 							'Description de la carte…',
-							'ufo-highlight'
+							'ufo-tools-highlight'
 						) }
 						allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					/>
@@ -226,14 +382,14 @@ export default function Edit( {
 							}
 							placeholder={ __(
 								'En savoir plus',
-								'ufo-highlight'
+								'ufo-tools-highlight'
 							) }
 							allowedFormats={ [] }
 						/>
 						<ArrowIcon />
 					</span>
 				</div>
-			</details>
+			</div>
 		</>
 	);
 }

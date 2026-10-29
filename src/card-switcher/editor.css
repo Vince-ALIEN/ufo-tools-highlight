@@ -17,10 +17,20 @@
 	align-items: stretch;
 }
 
-/* Le bouton "+" d'ajout d'InnerBlocks ne doit pas s'étirer comme une carte */
-.editor-styles-wrapper
-.wp-block-ufo-highlight-card-switcher
-.block-list-appender {
-	flex: 0 0 auto;
-	align-self: flex-end;
+/* Liste des cartes dans la barre latérale */
+.ufo-card-switcher__cards-help {
+	margin-top: 0;
+	color: #757575;
+}
+
+.ufo-card-switcher__cards {
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+}
+
+.ufo-card-switcher__cards .components-button {
+	width: 100%;
+	justify-content: space-between;
+	text-align: left;
 }

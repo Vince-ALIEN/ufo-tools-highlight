@@ -25,6 +25,85 @@
 	min-width: 260px;
 }
 
+/* Structure (cartes empilées puis en rangée à partir de `sm`) : doublée en
+   CSS simple, comme le panneau ci-dessous, pour que la mise en page ne
+   dépende pas du Tailwind du thème. */
+.wp-block-ufo-highlight-card-switcher .ufo-card-switcher__list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.wp-block-ufo-highlight-card-switcher-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	position: relative;
+	overflow: hidden;
+}
+
+@media (min-width: 640px) {
+
+	.wp-block-ufo-highlight-card-switcher .ufo-card-switcher__list {
+		flex-direction: row;
+	}
+
+	.wp-block-ufo-highlight-card-switcher-item {
+		flex: 1 1 0%;
+		min-width: 220px;
+		height: 480px;
+	}
+}
+
+/* Panneau (étiquette, description, bouton) : masqué carte fermée, visible
+   carte ouverte. Doublé en CSS simple (classes `hidden group-open:flex`) pour
+   ne pas dépendre du Tailwind du thème. */
+.wp-block-ufo-highlight-card-switcher-item .ufo-card-switcher__panel {
+	display: none;
+}
+
+.wp-block-ufo-highlight-card-switcher-item[open] .ufo-card-switcher__panel {
+	display: flex;
+	animation: ufo-card-switcher-reveal 0.3s ease both;
+}
+
+/* Mobile (cartes empilées, sous le point de rupture `sm` de Tailwind) :
+   l'accordéon n'a plus d'intérêt, chaque carte affiche titre, étiquette,
+   description et bouton en permanence.
+   `::details-content` rend visible le contenu d'un <details> fermé
+   (Chrome 131, Safari 18.4, Firefox 143). Règle isolée : un navigateur qui ne
+   connaît pas ce pseudo-élément l'ignore seule et garde l'accordéon. */
+@media (max-width: 639.98px) {
+
+	.wp-block-ufo-highlight-card-switcher-item::details-content {
+		content-visibility: visible;
+	}
+}
+
+@media (max-width: 639.98px) {
+
+	/* Préfixe du conteneur : passe devant les utilitaires Tailwind du thème
+	   (`flex-1`, `min-h-[480px]`) chargés après ce fichier. */
+	.wp-block-ufo-highlight-card-switcher .wp-block-ufo-highlight-card-switcher-item,
+	.wp-block-ufo-highlight-card-switcher .wp-block-ufo-highlight-card-switcher-item[open] {
+		flex: 0 0 auto;
+		min-width: 0;
+		min-height: 22.5rem;
+	}
+
+	.wp-block-ufo-highlight-card-switcher-item .ufo-card-switcher__panel {
+		display: flex;
+	}
+
+	.wp-block-ufo-highlight-card-switcher-item > summary {
+		cursor: default;
+	}
+
+	.wp-block-ufo-highlight-card-switcher-item[open] .ufo-card-switcher__panel {
+		animation: none;
+	}
+}
+
 @keyframes ufo-card-switcher-reveal {
 
 	from {
@@ -36,10 +115,6 @@
 		opacity: 1;
 		transform: translateY(0);
 	}
-}
-
-.wp-block-ufo-highlight-card-switcher-item[open] .ufo-card-switcher__panel {
-	animation: ufo-card-switcher-reveal 0.3s ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {

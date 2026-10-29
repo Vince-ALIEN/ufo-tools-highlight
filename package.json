@@ -1,7 +1,7 @@
 {
-  "name": "ufo-highlight",
+  "name": "ufo-tools-highlight",
   "version": "1.0.0",
-  "description": "Bloc Gutenberg « Sélecteur de cartes » interactif, accessible, sans build Tailwind (CSS écrit à la main).",
+  "description": "Bloc Gutenberg « Sélecteur de cartes » interactif et accessible, avec Tailwind CSS (classes générées par le thème).",
   "main": "index.js",
   "scripts": {
     "build": "wp-scripts build",
@@ -29,7 +29,9 @@
     "@wordpress/block-editor": "^15.17.0",
     "@wordpress/blocks": "^15.17.0",
     "@wordpress/components": "^32.6.0",
+    "@wordpress/data": "^10.53.0",
     "@wordpress/element": "^6.44.0",
-    "@wordpress/i18n": "^6.17.0"
+    "@wordpress/i18n": "^6.17.0",
+    "@wordpress/icons": "^15.4.0"
   }
 }
