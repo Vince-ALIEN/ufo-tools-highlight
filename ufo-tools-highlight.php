@@ -3,12 +3,12 @@
 /**
  * Plugin Name:       Ufo Tools Highlight
  * Description:       Bloc Gutenberg « Sélecteur de cartes » interactif et accessible (clavier + lecteurs d'écran), sans JavaScript sur le site.
- * Requires at least: 6.1
+ * Requires at least: 6.3
  * Requires PHP:      7.4
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Vincent LASSERRE
  * License:           GPL-2.0-or-later
- * License URI:       https://www.ufo-agency.com/
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       ufo-tools-highlight
  * Update URI:        https://github.com/Vince-ALIEN/ufo-tools-highlight
  *
@@ -43,7 +43,8 @@ if (in_array(UFO_TOOLS_HIGHLIGHT_PREDECESSOR, (array) get_option('active_plugins
 
 require_once plugin_dir_path(__FILE__) . 'includes/class-ufo-tools-highlight-updater.php';
 
-// WP_HTML_Tag_Processor : WordPress 6.2+.
+// WP_HTML_Tag_Processor : WordPress 6.2+. Le test reste : une mise à jour
+// depuis GitHub ne vérifie pas « Requires at least ».
 if (class_exists('WP_HTML_Tag_Processor')) {
     require_once plugin_dir_path(__FILE__) . 'includes/legacy-markup.php';
 }

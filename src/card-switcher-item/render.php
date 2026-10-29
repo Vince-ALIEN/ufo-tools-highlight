@@ -21,13 +21,15 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
+defined( 'ABSPATH' ) || exit;
+
 // Contenu enregistré avant 1.0.0 : étiquette replacée avant le titre
 // (voir includes/legacy-markup.php, chargé à partir de WordPress 6.2).
 if ( class_exists( 'Ufo_Tools_Highlight_Legacy_Markup' ) ) {
 	$content = Ufo_Tools_Highlight_Legacy_Markup::move_badge_above_title( $content );
 }
 
-$image_id = $attributes['imageId'] ?? 0;
+$image_id = absint( $attributes['imageId'] ?? 0 );
 
 if ( empty( $image_id ) ) {
 	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -46,9 +48,19 @@ $responsive_image = wp_get_attachment_image(
 	)
 );
 
-$updated_content = preg_replace(
+// Image supprimée de la médiathèque : on garde l'<img> enregistrée.
+if ( '' === $responsive_image ) {
+	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	return;
+}
+
+// Callback et non chaîne de remplacement : un « $0 » ou « \1 » dans le texte
+// alternatif serait remplacé par la balise d'origine, au milieu de l'attribut.
+$updated_content = preg_replace_callback(
 	'/<img\b[^>]*class="[^"]*not-prose absolute inset-0 h-full w-full object-cover[^"]*"[^>]*\/?>/',
-	$responsive_image,
+	static function () use ( $responsive_image ) {
+		return $responsive_image;
+	},
 	$content,
 	1
 );

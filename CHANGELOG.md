@@ -5,7 +5,7 @@ Tous les changements notables de ce projet seront documentés dans ce fichier.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2026-10-29
 
 ### Added
 - **« UFO Carte du sélecteur » insérable seule**, partout dans l'éditeur (cellule ufo Row, racine de la page…), plus seulement dans un « UFO Sélecteur de cartes ». Une carte seule s'ouvre et se ferme indépendamment des autres (pas d'attribut `name`), s'ouvre dans l'éditeur quand elle est sélectionnée et charge la feuille de style du sélecteur. Une carte sortie d'un sélecteur quitte son accordéon.
@@ -14,6 +14,17 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Icône du bloc « UFO Carte du sélecteur » : `LayersArrowUp` de Lucide, même traitement que le sélecteur.
 - `lucide-react` 1.64 (`LayersArrowUp` n'existe pas en 0.x).
 - Icône du bloc « UFO Sélecteur de cartes » : `Layers` de Lucide, sur fond `#F6F6F7` en `#EB9188`, comme les blocs d'ufo-tools-blocks.
+- WordPress 6.3 minimum (blocs en `apiVersion` 3, `WP_HTML_Tag_Processor`).
+- Licence : fichier `LICENSE.txt` (GPL-2.0) et `License URI` vers le texte de la GPL.
+- `uninstall.php` supprime le cache des releases GitHub.
+
+### Security
+- **Rendu de la carte** : un `$0` ou `\1` dans le texte alternatif de l'image n'est plus interprété par le remplacement de l'`<img>` (`preg_replace_callback`). Il permettait à un contributeur d'injecter un attribut dans la balise.
+- `render.php` s'arrête s'il est appelé directement.
+- « Vérifier à nouveau » ne contourne le cache des releases que pour un utilisateur qui peut mettre à jour les plugins.
+
+### Fixed
+- Image supprimée de la médiathèque : la carte garde l'image enregistrée au lieu de n'en afficher aucune.
 
 ## [1.0.0] - 2026-10-29
 

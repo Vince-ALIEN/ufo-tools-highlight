@@ -1,6 +1,6 @@
 {
   "name": "ufo-tools-highlight",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Bloc Gutenberg « Sélecteur de cartes » interactif et accessible, avec Tailwind CSS (classes générées par le thème).",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint:js": "wp-scripts lint-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip --config .distignore"
+    "plugin-zip": "wp-scripts plugin-zip"
   },
   "keywords": [
     "wordpress",

@@ -49,4 +49,4 @@ Les sites installés depuis le zip de release reçoivent les mises à jour depui
 
 ## Licence
 
-GPL-2.0-or-later
+GPL-2.0-or-later, voir `LICENSE.txt`.

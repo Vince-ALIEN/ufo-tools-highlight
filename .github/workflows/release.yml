@@ -43,6 +43,8 @@ jobs:
           grep -q ' ufo-tools-highlight/ufo-tools-highlight.php$' files.txt
           grep -q ' ufo-tools-highlight/includes/class-ufo-tools-highlight-updater.php$' files.txt
           grep -q ' ufo-tools-highlight/build/card-switcher/block.json$' files.txt
+          grep -q ' ufo-tools-highlight/uninstall.php$' files.txt
+          grep -q ' ufo-tools-highlight/LICENSE.txt$' files.txt
 
       - name: Publication
         env:
