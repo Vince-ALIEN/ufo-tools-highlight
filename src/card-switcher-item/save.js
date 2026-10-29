@@ -43,13 +43,6 @@ export default function save( { attributes } ) {
 					className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/35 to-transparent"
 					aria-hidden="true"
 				/>
-				<RichText.Content
-					tagName="h3"
-					className="ufo-card-switcher__title relative m-0 text-[1.375rem] font-semibold leading-tight text-background sm:text-2xl"
-					value={ title }
-				/>
-			</summary>
-			<div className="ufo-card-switcher__panel relative hidden flex-col items-start gap-3 px-6 pb-6 pt-3 group-open:flex">
 				{ hasBadge && (
 					<RichText.Content
 						tagName="span"
@@ -57,10 +50,17 @@ export default function save( { attributes } ) {
 						value={ badge }
 					/>
 				) }
+				<RichText.Content
+					tagName="h3"
+					className="ufo-card-switcher__title relative m-0 text-lg font-semibold leading-tight text-background sm:text-2xl"
+					value={ title }
+				/>
+			</summary>
+			<div className="ufo-card-switcher__panel relative hidden flex-col items-start gap-3 px-6 pb-6 pt-3 group-open:flex">
 				{ hasDescription && (
 					<RichText.Content
 						tagName="p"
-						className="ufo-card-switcher__description m-0 text-base leading-relaxed text-background"
+						className="ufo-card-switcher__description not-prose m-0 text-base leading-relaxed text-background"
 						value={ description }
 					/>
 				) }

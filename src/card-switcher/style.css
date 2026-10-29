@@ -67,6 +67,21 @@
 	animation: ufo-card-switcher-reveal 0.3s ease both;
 }
 
+/* Étiquette au-dessus du titre, dans le <summary> : au-dessus du dégradé,
+   révélée à l'ouverture sur desktop comme le panneau, toujours visible sur
+   mobile (le <summary> n'est jamais masqué). */
+.wp-block-ufo-highlight-card-switcher-item .ufo-card-switcher__badge {
+	position: relative;
+	margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+
+	.wp-block-ufo-highlight-card-switcher-item:not([open]) .ufo-card-switcher__badge {
+		display: none;
+	}
+}
+
 /* Mobile (cartes empilées, sous le point de rupture `sm` de Tailwind) :
    l'accordéon n'a plus d'intérêt, chaque carte affiche titre, étiquette,
    description et bouton en permanence.

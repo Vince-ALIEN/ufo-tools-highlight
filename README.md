@@ -15,7 +15,7 @@ Les noms de blocs (`ufo-highlight/*`) et les classes CSS sont ceux d'UFO Highlig
 
 ## Comportement
 
-- **Desktop (≥ 640 px)** : cartes en rangée ; la carte ouverte s'élargit et révèle étiquette, description et bouton. Une seule carte ouverte à la fois (`<details name>`).
+- **Desktop (≥ 640 px)** : cartes en rangée ; la carte ouverte s'élargit et révèle l'étiquette (au-dessus du titre), la description et le bouton. Une seule carte ouverte à la fois (`<details name>`).
 - **Mobile (< 640 px)** : cartes empilées, titre, étiquette, description et bouton **toujours visibles** (`::details-content`, Chrome 131+, Safari 18.4+, Firefox 143+ ; les navigateurs plus anciens gardent l'accordéon).
 
 ## Édition

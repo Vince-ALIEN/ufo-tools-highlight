@@ -332,21 +332,6 @@ export default function Edit( {
 						aria-hidden="true"
 					/>
 					<RichText
-						tagName="h3"
-						className="ufo-card-switcher__title relative m-0 text-[1.375rem] font-semibold leading-tight text-background sm:text-2xl"
-						value={ title }
-						onChange={ ( value ) =>
-							setAttributes( { title: value } )
-						}
-						placeholder={ __(
-							'Titre de la carte…',
-							'ufo-tools-highlight'
-						) }
-						allowedFormats={ [] }
-					/>
-				</div>
-				<div className="ufo-card-switcher__panel relative hidden flex-col items-start gap-3 px-6 pb-6 pt-3 group-open:flex">
-					<RichText
 						tagName="span"
 						className="ufo-card-switcher__badge inline-block w-fit rounded-full border border-background/40 bg-background/20 px-3 py-1 text-xs font-semibold text-background"
 						value={ badge }
@@ -360,8 +345,23 @@ export default function Edit( {
 						allowedFormats={ [] }
 					/>
 					<RichText
+						tagName="h3"
+						className="ufo-card-switcher__title relative m-0 text-lg font-semibold leading-tight text-background sm:text-2xl"
+						value={ title }
+						onChange={ ( value ) =>
+							setAttributes( { title: value } )
+						}
+						placeholder={ __(
+							'Titre de la carte…',
+							'ufo-tools-highlight'
+						) }
+						allowedFormats={ [] }
+					/>
+				</div>
+				<div className="ufo-card-switcher__panel relative hidden flex-col items-start gap-3 px-6 pb-6 pt-3 group-open:flex">
+					<RichText
 						tagName="p"
-						className="ufo-card-switcher__description m-0 text-base leading-relaxed text-background"
+						className="ufo-card-switcher__description not-prose m-0 text-base leading-relaxed text-background"
 						value={ description }
 						onChange={ ( value ) =>
 							setAttributes( { description: value } )
