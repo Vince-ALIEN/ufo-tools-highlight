@@ -21,18 +21,10 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-// Contenu enregistré avant 1.0.0 (étiquette dans le panneau, sous le titre) :
-// l'étiquette est replacée avant le titre, comme le fait save.js désormais,
-// sans attendre que la page soit réenregistrée dans l'éditeur (la
-// dépréciation ne migre le balisage qu'à ce moment-là). L'étiquette n'a
-// aucun format autorisé : elle ne contient jamais de <span> imbriqué.
-if ( preg_match( '/<span class="ufo-card-switcher__badge[^"]*">.*?<\/span>/s', $content, $badge, PREG_OFFSET_CAPTURE ) ) {
-	$title_offset = strpos( $content, '<h3 class="ufo-card-switcher__title' );
-
-	if ( false !== $title_offset && $badge[0][1] > $title_offset ) {
-		$content = substr_replace( $content, '', $badge[0][1], strlen( $badge[0][0] ) );
-		$content = substr_replace( $content, $badge[0][0], $title_offset, 0 );
-	}
+// Contenu enregistré avant 1.0.0 : étiquette replacée avant le titre
+// (voir includes/legacy-markup.php, chargé à partir de WordPress 6.2).
+if ( class_exists( 'Ufo_Tools_Highlight_Legacy_Markup' ) ) {
+	$content = Ufo_Tools_Highlight_Legacy_Markup::move_badge_above_title( $content );
 }
 
 $image_id = $attributes['imageId'] ?? 0;

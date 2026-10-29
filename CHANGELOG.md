@@ -14,7 +14,7 @@ Première version d'**Ufo Tools Highlight**, successeur d'UFO Highlight 1.0.0 (n
   - Migration : installer et activer Ufo Tools Highlight, qui désactive UFO Highlight, puis supprimer UFO Highlight. Tant qu'UFO Highlight est actif, Ufo Tools Highlight ne charge rien et affiche un avertissement.
   - Thèmes : remplacer le chemin `@source` Tailwind par `plugins/ufo-tools-highlight/src`.
 - Les blocs passent dans la catégorie partagée **UFO Blocks**.
-- **Étiquette au-dessus du titre** (dans le `<summary>`) : révélée à l'ouverture sur desktop, toujours visible sur mobile. Les cartes enregistrées avec l'étiquette sous le titre restent valides (dépréciation) et sont migrées à la prochaine sauvegarde ; d'ici là, `render.php` replace l'étiquette au-dessus du titre sur le site.
+- **Étiquette au-dessus du titre** (dans le `<summary>`) : révélée à l'ouverture sur desktop, toujours visible sur mobile. Les cartes enregistrées avec l'étiquette sous le titre restent valides (dépréciation) et sont migrées à la prochaine sauvegarde  ; d'ici là, le rendu replace l'étiquette au-dessus du titre sur le site (WordPress 6.2+, via `WP_HTML_Tag_Processor`).
 - Titre en `text-lg` (au lieu de `text-[1.375rem]`) sur mobile, description en `not-prose`.
 - **Édition** : la carte sélectionnée s'ouvre dans l'éditeur (plus besoin de basculer « Ouverte par défaut » pour modifier une carte). Les cartes sont rendues en `<div>` dans l'éditeur : la barre d'espace et le clic ne déclenchent plus l'ouverture native du `<summary>` pendant la saisie du titre.
   - Repère « Carte N » sur chaque carte, liste des cartes cliquable dans la barre latérale du sélecteur, bouton « Ajouter une carte ».

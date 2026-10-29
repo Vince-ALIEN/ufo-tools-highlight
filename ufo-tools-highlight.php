@@ -43,6 +43,11 @@ if (in_array(UFO_TOOLS_HIGHLIGHT_PREDECESSOR, (array) get_option('active_plugins
 
 require_once plugin_dir_path(__FILE__) . 'includes/class-ufo-tools-highlight-updater.php';
 
+// WP_HTML_Tag_Processor : WordPress 6.2+.
+if (class_exists('WP_HTML_Tag_Processor')) {
+    require_once plugin_dir_path(__FILE__) . 'includes/legacy-markup.php';
+}
+
 // Mises à jour depuis les releases GitHub (hors is_admin() : la
 // vérification des mises à jour tourne aussi en cron).
 add_action('plugins_loaded', function () {
